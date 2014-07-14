@@ -15,7 +15,26 @@ from django.views.decorators.cache import cache_control
 
 def login(request):
 	form = LoginForm()
+
+	if request.method =='POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			usuario = form.data['usuario']
+			password = form.data['password']
+			print auth.authenticate(usermane=usuario,password=password)
+			user = auth.authenticate(usermane=usuario,password=password)
+			if user is not None and user.is_active:
+
+				auth.login(request.user)
+				return HttpResponseRedirect('home')
 	values={
 		'form':form,
 	}
 	return render_to_response('accounts/login.html',values, context_instance = RequestContext(request))
+
+def home(request):
+
+	values={
+		
+	}
+	return render_to_response('base.html',values, context_instance = RequestContext(request))	
