@@ -11,12 +11,48 @@
 					</h3>
 				</div>
 				<div class="panel-body">
-					{{form}}
+					<form role="form">
+						<div class="form-group">
+							 <label for="id_ciudad">Ciudad </label>{{form.ciudad}}
+							 <a id="agregarCiudad" href="#ciudadNueva" role="button" class="btn btn-info btn-xs" data-toggle="modal">Agregar Ciudad</a>
+			
+
+						</div>
+						<div class="form-group">
+							 <label for="id_descripcion">Descripcion</label>{{form.descripcion}}
+						</div>
+						<button type="submit" class="btn btn-success btn-small pull-right">Guardar</button>	
+					</form>
 				</div>
 				<div class="panel-footer">
-					Panel footer
+					
 				</div>
 			</div>
+			<div class="modal fade" id="ciudadNueva" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+											<h4 class="modal-title" id="myModalLabel">
+												Agregar Ciudad
+											</h4>
+										</div>
+										<form role="form">
+										<div class="modal-body">
+											
+												<div class="form-group">
+													 <label for="id_descripcion">Descripcion</label>{{ciudades.descripcion}}
+												</div>											
+										</div>
+										<div class="modal-footer">
+											 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button> <button type="button" class="btn btn-success">Guardar</button>
+										</div>
+										</form>
+									</div>
+									
+								</div>
+								
+							</div>
 		</div>
 	</div>
 </div>

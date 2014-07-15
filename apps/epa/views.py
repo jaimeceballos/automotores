@@ -46,7 +46,11 @@ def logout(request):
 
 def unidades(request):
 	form = UnidadesForm()
+	ciudades = CiudadesForm()
+	ciudades.fields['pais'].initial = RefPaises.objects.get(descripcion__contains='ARGENTINA')
+	ciudades.fields['provincia'].initial = RefProvincia.objects.get(descripcion__contains='CHUBUT')
 	values={
 		'form':form,
+		'ciudades':ciudades,
 	}
 	return render_to_response('referencias/unidades.html',values, context_instance = RequestContext(request))	

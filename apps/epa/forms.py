@@ -3,7 +3,15 @@
 
 from django import forms 
 from apps.epa.models import *
-
+from django.forms import ModelForm, TimeField
+from django.contrib import admin
+from django.utils import timezone 
+from django.conf import settings
+from django.contrib.auth.models import  Group,Permission,User
+from django.contrib.admin import widgets
+from django.contrib.admin.widgets import FilteredSelectMultiple
+from django.forms.widgets import CheckboxSelectMultiple
+from django.core.exceptions import ValidationError
 attrs_dict = { 'class': 'required' }
 
 class LoginForm(forms.Form):
@@ -12,7 +20,7 @@ class LoginForm(forms.Form):
 
 
 class CiudadesForm(forms.ModelForm):
-    descripcion = forms.CharField(required=True)
+    descripcion = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'Descripcion'})),required=True)
     class Meta:
         model = RefCiudades
 
@@ -34,8 +42,8 @@ class PaisesForm(forms.ModelForm):
 		model = RefPaises
 
 class UnidadesForm(forms.ModelForm):
-    descripcion = forms.CharField(required=True)
-    ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
+    descripcion = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'Descripcion'})),required=True)
+    ciudad = forms.ModelChoiceField(widget=forms.Select(attrs=dict({'class':'required form-control'})), queryset= RefCiudades.objects.all()  )
     class Meta:
         model = UnidadesRegionales
  
