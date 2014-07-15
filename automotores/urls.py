@@ -7,6 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'apps.epa.views.login', name='login'),
+    url(r'^$', 'apps.epa.views.logout', name='logout'),
     # url(r'^automotores/', include('automotores.foo.urls')),
     url(r'^automotores/', include('apps.epa.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:

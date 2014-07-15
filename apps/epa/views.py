@@ -21,12 +21,12 @@ def login(request):
 		if form.is_valid():
 			usuario = form.data['usuario']
 			password = form.data['password']
-			print auth.authenticate(usermane=usuario,password=password)
-			user = auth.authenticate(usermane=usuario,password=password)
+			print auth.authenticate(username=usuario,password=password)
+			user = auth.authenticate(username=usuario,password=password)
 			if user is not None and user.is_active:
 
-				auth.login(request.user)
-				return HttpResponseRedirect('home')
+				auth.login(request,user)
+				return HttpResponseRedirect(reverse('home'))
 	values={
 		'form':form,
 	}
@@ -38,3 +38,15 @@ def home(request):
 		
 	}
 	return render_to_response('base.html',values, context_instance = RequestContext(request))	
+
+def logout(request):
+	auth.logout(request)
+
+	return HttpResponseRedirect(reverse('login'))
+
+def unidades(request):
+	form = UnidadesForm()
+	values={
+		'form':form,
+	}
+	return render_to_response('referencias/unidades.html',values, context_instance = RequestContext(request))	

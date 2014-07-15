@@ -5,5 +5,6 @@ from views import *
 
 urlpatterns=patterns( '',  
   url(r'^$',  home, name='home'),
+  url(r'^unidades/$',  unidades, name='unidades'),
   
 )
