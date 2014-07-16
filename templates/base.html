@@ -3,6 +3,7 @@
 <html>
 <head>
 	<link href="{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet">
+	<link href="{{STATIC_URL}}css/style.css" rel="stylesheet">
 	
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{STATIC_URL}}img/apple-touch-icon-144-precomposed.png">
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{STATIC_URL}}img/apple-touch-icon-114-precomposed.png">
@@ -45,13 +46,22 @@
 								<li>
 									<a href="{% url 'dependencias' %}"> <i class="glyphicon glyphicon-edit"></i> Dependencias</a>
 								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="{% url 'tiposvehiculos' %}"> <i class="glyphicon glyphicon-edit"></i> Tipos de vehiculos</a>
+								</li>
+								<li>
+									<a href="{% url 'estadosmovil' %}"> <i class="glyphicon glyphicon-edit"></i> Estados de movil</a>
+								</li>
 							</ul>
+						</li>
+						<li>
+							<a href="{% url 'moviles' %}">M&oacute;viles</a>
 						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<!--li>
-							<a href="#">Link</a>
-						</li-->
+						
 						<li class="dropdown">
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-user"></i> {{user.first_name}}<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
@@ -66,17 +76,17 @@
 			</nav>
 		</div>
 	</div>
-
+</div>
+<div class="container">
+	<div class="row clearfix">
 {% block cuerpo %}
 
-	<div class="row clearfix" style="padding-top:100px">
 		<div class="col-md-12 column">
 			<center><img src="{{STATIC_URL}}img/escudo.png" class="img-circle" /></center>
 		</div>
-	</div>
-
-	
 {% endblock %}
+	</div>
 </div>
+
 </body>
 </html>

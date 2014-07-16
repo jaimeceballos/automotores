@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block cuerpo %}
+
+		<div class="col-md-6 column">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						ABM de Tipos de Vehiculos
+					</h3>
+				</div>
+				<div class="panel-body">
+				{% if tipo %}
+					<form role="form" action="{% url 'tipovehiculo' tipo.id %}" method="post">{% csrf_token %}
+				{% else %}
+					<form role="form" action="{% url 'tiposvehiculos' %}" method="post">{% csrf_token %}
+				{% endif %}
+					
+						<div class="form-group">
+							 <label for="id_descripcion">Descripcion</label>{{form.descripcion}}
+						</div>
+						<button type="submit" class="btn btn-success btn-small pull-right">Guardar</button>	
+					</form>
+				</div>
+				<div class="panel-footer">
+					
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 column">
+			<table class="table table-bordered table-hover table-condensed" id="table" name="table">
+				<thead>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							Tipo
+						</th>
+						<th>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for t in tipos %}
+					<tr>
+						<td>
+							{{t.id}}
+						</td>
+						<td>
+							{{t.descripcion}}
+						</td>
+						<td>
+							<center><a href="{% url 'tipovehiculo' t.id %}"><i class="glyphicon glyphicon-pencil"></i></a></center>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			
+		</div>
+	
+{% endblock %}

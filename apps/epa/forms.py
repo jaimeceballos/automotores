@@ -55,3 +55,25 @@ class DependenciasForm(forms.ModelForm):
     
     class Meta:
         model = Dependencias     
+
+class TipoVehiculoForm(forms.ModelForm):
+    descripcion = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'Descripcion'})),required=True)
+
+    class Meta:
+        model = TipoVehiculo
+
+class EstadoMovilForm(forms.ModelForm):
+    descripcion = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'Descripcion'})),required=True)
+
+    class Meta:
+        model = EstadoMovil
+
+class MovilForm(forms.ModelForm):
+    
+    class Meta:
+        model = Movil
+
+class MovilEstadoForm(forms.ModelForm):
+    
+    class Meta:
+        model = MovilEstado

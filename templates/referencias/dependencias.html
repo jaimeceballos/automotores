@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block cuerpo %}
-<div class="container" style="padding-top:100px">
-	<div class="row clearfix">
+
 		<div class="col-md-6 column">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
@@ -17,7 +16,7 @@
 					<form role="form" action="{% url 'dependencias' %}" method="post">{% csrf_token %}
 				{% endif %}
 						<div>
-							 <label for="id_unidades_regionales">Ciudad </label>{{form.ciudad}}
+							 <label for="id_ciudad">Ciudad </label>{{form.ciudad}}
 							 <a id="agregarCiudad" href="#ciudadNueva" role="button" class="btn btn-info btn-xs" data-toggle="modal">Agregar Ciudad</a>
 						</div>
 						<div class="form-group">
@@ -104,6 +103,5 @@
 								
 							</div>
 		</div>
-	</div>
-</div>
+	
 {% endblock %}

@@ -124,3 +124,52 @@ class Dependencias(models.Model):
         unique_together = ('descripcion','unidades_regionales','ciudad')
         ordering = ["descripcion"]
         db_table = 'dependencias'
+
+class TipoVehiculo(models.Model):
+    descripcion = models.CharField(max_length=50,unique=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.descripcion)
+        self.descripcion = self.descripcion.upper()
+
+    def save(self, force_insert=False,force_update=False):
+        self.descripcion = self.descripcion.upper()
+        super(TipoVehiculo, self).save(force_insert,force_update)
+
+    class Meta:
+        db_table = 'tipo_vehiculo'
+
+class EstadoMovil(models.Model):
+    descripcion = models.CharField(max_length=50,unique=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.descripcion)
+        self.descripcion = self.descripcion.upper()
+
+    def save(self, force_insert=False,force_update=False):
+        self.descripcion = self.descripcion.upper()
+        super(EstadoMovil, self).save(force_insert,force_update)
+
+    class Meta:
+        db_table = 'estado_movil'
+
+class Movil(models.Model):
+    registro_interno = models.CharField(max_length=6,unique=True)
+    tipo_vehiculo   = models.ForeignKey('TipoVehiculo',related_name='movil',on_delete=models.PROTECT)
+    unidad_regional     = models.ForeignKey('UnidadesRegionales',related_name='moviles',on_delete=models.PROTECT)
+    dependencia         = models.ForeignKey('Dependencias',related_name='moviles_en',on_delete=models.PROTECT)
+
+    def __unicode__(self):
+        return u'%s' % (self.registro_interno)
+        self.registro_interno = self.registro_interno.upper()
+
+    class Meta:
+        db_table = 'movil'
+
+class MovilEstado(models.Model):
+    movil   = models.ForeignKey('Movil',related_name='estados',on_delete=models.PROTECT)
+    estado  = models.ForeignKey('EstadoMovil',related_name='moviles_estado',on_delete=models.PROTECT)
+    observaciones = models.TextField(max_length=100,blank=True,null=True)
+
+    class Meta:
+        db_table = 'movil_estados'
