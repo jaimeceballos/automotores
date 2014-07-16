@@ -48,9 +48,9 @@ class UnidadesForm(forms.ModelForm):
         model = UnidadesRegionales
  
 class DependenciasForm(forms.ModelForm):
-    descripcion = forms.CharField(required=True)
-    ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
-    unidades_regionales = forms.ModelChoiceField(widget = forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= UnidadesRegionales.objects.all())
+    descripcion = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'Descripcion'})),required=True)
+    ciudad = forms.ModelChoiceField(widget=forms.Select(dict({'class':'required form-control'})), queryset= RefCiudades.objects.all()  )
+    unidades_regionales = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})), queryset= UnidadesRegionales.objects.all())
 
     
     class Meta:

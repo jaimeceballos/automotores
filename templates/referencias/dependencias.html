@@ -7,21 +7,23 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						ABM de Unidades Regionales
+						ABM de Dependencias
 					</h3>
 				</div>
 				<div class="panel-body">
-				{% if unidad %}
-					<form role="form" action="{% url 'unidad' unidad.id %}" method="post">{% csrf_token %}
+				{% if dependencia %}
+					<form role="form" action="{% url 'dependencia' dependencia.id %}" method="post">{% csrf_token %}
 				{% else %}
-					<form role="form" action="{% url 'unidades' %}" method="post">{% csrf_token %}
+					<form role="form" action="{% url 'dependencias' %}" method="post">{% csrf_token %}
 				{% endif %}
-						<div class="form-group">
-							 <label for="id_ciudad">Ciudad </label>{{form.ciudad}}
+						<div>
+							 <label for="id_unidades_regionales">Ciudad </label>{{form.ciudad}}
 							 <a id="agregarCiudad" href="#ciudadNueva" role="button" class="btn btn-info btn-xs" data-toggle="modal">Agregar Ciudad</a>
-			
-
 						</div>
+						<div class="form-group">
+							 <label for="id_unidades_regionales">Unidad Regional </label>{{form.unidades_regionales}}
+						</div>
+						
 						<div class="form-group">
 							 <label for="id_descripcion">Descripcion</label>{{form.descripcion}}
 						</div>
@@ -44,27 +46,32 @@
 							Unidad Regional
 						</th>
 						<th>
+							Dependencia
+						</th>
+						<th>
 							Ciudad
 						</th>
 						<th>
-							
 						</th>
 					</tr>
 				</thead>
 				<tbody>
-				{% for uni in unidades %}
+				{% for depe in dependencias %}
 					<tr>
 						<td>
-							{{uni.id}}
+							{{depe.id}}
 						</td>
 						<td>
-							{{uni.descripcion}}
+							{{depe.unidades_regionales}}
 						</td>
 						<td>
-							{{uni.ciudad}}
+							{{depe.descripcion}}
 						</td>
 						<td>
-							<center><a href="{% url 'unidad' uni.id %}"><i class="glyphicon glyphicon-pencil"></i></a></center>
+							{{depe.ciudad}}
+						</td>
+						<td>
+							<center><a href="{% url 'dependencia' depe.id %}"><i class="glyphicon glyphicon-pencil"></i></a></center>
 						</td>
 					</tr>
 				{% endfor %}
@@ -84,7 +91,7 @@
 											
 												<div class="form-group">
 													 <label for="id_descripcion">Descripcion</label>{{ciudades.descripcion}}
-													 <input type="hidden" name="formulario" id="formulario" value="unidades">
+													 <input type="hidden" name="formulario" id="formulario" value="dependencias">
 												</div>											
 										</div>
 										<div class="modal-footer">

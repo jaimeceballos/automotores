@@ -13,6 +13,9 @@
 	<script type="text/javascript" src="{{STATIC_URL}}js/jquery.min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/scripts.js"></script>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/demo_table.css" type="text/css" /> 
+	<script type="text/javascript" language="javascript" src="{{STATIC_URL}}js/jquery.dataTables.js"></script>
+	<script src="{{ STATIC_URL }}js/funciones.js"></script>
 </head>
 </head>
 
@@ -40,7 +43,7 @@
 									<a href="{% url 'unidades' %}"> <i class="glyphicon glyphicon-edit"></i> Unidades Regionales</a>
 								</li>
 								<li>
-									<a href="#"> <i class="glyphicon glyphicon-edit"></i> Dependencias</a>
+									<a href="{% url 'dependencias' %}"> <i class="glyphicon glyphicon-edit"></i> Dependencias</a>
 								</li>
 							</ul>
 						</li>
