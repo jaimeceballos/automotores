@@ -169,7 +169,9 @@ class Movil(models.Model):
 class MovilEstado(models.Model):
     movil   = models.ForeignKey('Movil',related_name='estados',on_delete=models.PROTECT)
     estado  = models.ForeignKey('EstadoMovil',related_name='moviles_estado',on_delete=models.PROTECT)
+    fecha   = models.DateTimeField(auto_now=True)
     observaciones = models.TextField(max_length=100,blank=True,null=True)
 
     class Meta:
+        ordering = ['-fecha']
         db_table = 'movil_estados'

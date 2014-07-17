@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block body %}
+
+	<div class="container">
+	<input type='button' class="btn btn-success" onclick='window.print();' value='Imprimir' />
+	<br><hr>
+	<div class="row clearfix">
+		<div class="col-md-2 column">
+			<img src="{{STATIC_URL}}img/escudo.png" />
+		</div>
+		<div class="col-md-6 column">
+			<h1 class="text-center text-info">
+				Estado de moviles policiales
+			</h1>
+		</div>
+		<div class="col-md-4 column">
+			<p>
+				Informacion Generada por: 
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							Unidad Regional
+						</th>
+						<th>
+							Dependencia
+						</th>
+						<th>
+							Tipo Movil
+						</th>
+						<th>
+							RI
+						</th>
+						<th>
+							Estado
+						</th>
+						<th>
+							Observaciones
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for movil in moviles %}
+					<tr>
+						<td>
+							{{movil.id}}
+						</td>
+						<td>
+							{{movil.unidad_regional}}
+						</td>
+						<td>
+							{{movil.dependencia}}
+						</td>
+						<td>
+							{{movil.tipo_vehiculo}}
+						</td>
+						<td>
+							{{movil.registro_interno}}
+						</td>
+						<td>
+							{{movil.estados.all.0.estado}}
+						</td>
+						<td>
+							{{movil.estados.all.0.observaciones}}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>	
+{% endblock %}

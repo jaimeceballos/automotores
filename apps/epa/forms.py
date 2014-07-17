@@ -79,6 +79,8 @@ class MovilForm(forms.ModelForm):
         model = Movil
 
 class MovilEstadoForm(forms.ModelForm):
-    
+    estado          = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})),queryset=EstadoMovil.objects.all())
+    observaciones   = forms.CharField(widget = forms.Textarea(dict({'class':'required form-control'})))
     class Meta:
+        exclude = ('movil')
         model = MovilEstado

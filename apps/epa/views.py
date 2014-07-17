@@ -248,10 +248,38 @@ def obtener_dependencias(request,id_unidad):
 	return HttpResponse(data, mimetype='application/json')
 
 def listar(request):
-	moviles = Movil.objects.filter(unidad_regional=UnidadesRegionales.objects.all()[0])
-	unidades = UnidadesRegionales.objects.all()
+	moviles = Movil.objects.all()
 	values = {
 		'moviles':moviles,
-		'unidades':unidades,
 	}
 	return render_to_response('moviles/listado.html',values,context_instance = RequestContext(request))
+
+def cargar_estado(request,id_movil):
+	movil = Movil.objects.get(id=id_movil)
+	estados = MovilEstado.objects.filter(movil = movil)
+	form = MovilEstadoForm()
+	
+	if request.method == 'POST':
+		form = MovilEstadoForm(request.POST)
+		
+		if form.is_valid():
+			estado = MovilEstado()
+			estado.movil = movil
+			estado.estado = form.cleaned_data['estado']
+			estado.observaciones = form.cleaned_data['observaciones']
+			estado.save()
+			return HttpResponseRedirect('../%d/' % movil.id)
+	values = {
+		'movil':movil,
+		'form':form,
+		'estados':estados,
+	}
+	return render_to_response('moviles/cargar_estado.html',values,context_instance = RequestContext(request))
+
+def estado(request):
+	moviles = Movil.objects.all()
+
+	values={
+		'moviles':moviles,
+	}
+	return render_to_response('moviles/estado.html',values,context_instance = RequestContext(request))

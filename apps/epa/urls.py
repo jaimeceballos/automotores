@@ -18,4 +18,6 @@ urlpatterns=patterns( '',
   url(r'^moviles/nuevo/$',  nuevo, name='nuevo'),
   url(r'^obtener_dependencias/(?P<id_unidad>\d+)/$',  obtener_dependencias, name='obtener_dependencias'),
   url(r'^moviles/listar/$',  listar, name='listar'),
+  url(r'^moviles/cargarestado/(?P<id_movil>\d+)/$',  cargar_estado, name='cargar_estado'),
+  url(r'^moviles/estado/$',  estado, name='estado'),
 )

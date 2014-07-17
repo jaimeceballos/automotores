@@ -1,18 +1,54 @@
 {% extends 'moviles/movilbase.html' %}
 
 {% block movilcuerpo %}
-	<ul class="nav nav-pills">
-		{% for unidad in unidades %}
-			{% if unidades.index(unidad.descripcion) == 0 %}
-			<li class="active">
-				<a href="#"> {{unidad}}</a>
-			</li>
-			{% else %}
-				<li>
-					<a href="#">{{unidad}}</a>
-				</li>
-			{% endif %}
-			{% endfor %}
-			</ul>
+	<table class="table table-bordered table-hover table-condensed" name="table" id="table">
+				<thead>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							Unidad Regional
+						</th>
+						<th>
+							Dependencia
+						</th>
+						<th>
+							Registro Interno
+						</th>
+						<th>
+							Estado
+						</th>
+						<th>
+							
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for movil in moviles %}
+					<tr>
+						<td>
+							{{movil.id}}
+						</td>
+						<td>
+							{{movil.unidad_regional}}
+						</td>
+						<td>
+							{{movil.dependencia}}
+						</td>
+						<td>
+							{{movil.registro_interno}}
+						</td>
+						<td>
+							{{movil.estados.all.0.estado}}
+						</td>
+						<td>
+							<a href="{% url 'cargar_estado' movil.id %}">	<i class="glyphicon glyphicon-edit" data-toggle="tooltip" data-placement="right" title="Permite Modificar el estado del Movil"></i></a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		
 
 {% endblock %}

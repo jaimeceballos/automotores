@@ -1,0 +1,43 @@
+{% extends 'moviles/movilbase.html' %}
+
+{% block movilcuerpo %}
+	<h3>Carga de Estado para el movil: {{movil}} <small> {{movil.unidad_regional}} {{movil.dependencia}}</small></h3>
+	<form role="form" method="post" action="{% url 'cargar_estado' movil.id %}">{% csrf_token %}
+		{{form.as_p}}
+	
+		<button type="submit" class="btn btn-success btn-sm pull-right">Guardar</button>
+	</form>
+	<br><br><hr>
+	
+
+	<table class="table table-bordered table-hover table-condensed" name="table" id="table">
+				<thead>
+					<tr>
+						<th>
+							#
+						</th>
+						<th>
+							Estado
+						</th>
+						<th>
+							Fecha
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for estado in estados %}
+					<tr title="{{estado.observaciones}}">
+						<td>
+							{{estado.id}}
+						</td>
+						<td>
+							{{estado.estado}}
+						</td>
+						<td>
+							{{estado.fecha|date:'SHORT_DATE_FORMAT'}}
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+{% endblock %}
