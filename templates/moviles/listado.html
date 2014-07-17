@@ -1,0 +1,18 @@
+{% extends 'moviles/movilbase.html' %}
+
+{% block movilcuerpo %}
+	<ul class="nav nav-pills">
+		{% for unidad in unidades %}
+			{% if unidades.index(unidad.descripcion) == 0 %}
+			<li class="active">
+				<a href="#"> {{unidad}}</a>
+			</li>
+			{% else %}
+				<li>
+					<a href="#">{{unidad}}</a>
+				</li>
+			{% endif %}
+			{% endfor %}
+			</ul>
+
+{% endblock %}

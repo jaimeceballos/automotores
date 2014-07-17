@@ -69,7 +69,12 @@ class EstadoMovilForm(forms.ModelForm):
         model = EstadoMovil
 
 class MovilForm(forms.ModelForm):
-    
+    unidad_regional     = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})), queryset= UnidadesRegionales.objects.all())
+    dependencia         = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})),queryset=Dependencias.objects.all())
+    tipo_vehiculo       = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})),queryset=TipoVehiculo.objects.all())
+    registro_interno    = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'Registro Interno','required':'required'})),required=True)    
+
+
     class Meta:
         model = Movil
 

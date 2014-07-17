@@ -12,6 +12,7 @@ from datetime import datetime
 from django.forms.forms import NON_FIELD_ERRORS
 from apps.epa.forms import *
 from django.views.decorators.cache import cache_control
+from django.core import serializers
 
 def login(request):
 	form = LoginForm()
@@ -222,8 +223,35 @@ def moviles(request):
 
 def nuevo(request):
 	form = MovilForm()
-
+	msg=''
+	if request.method == 'POST':
+		form = MovilForm(request.POST)
+		if form.is_valid():
+			movil = Movil()
+			movil.registro_interno = form.cleaned_data['registro_interno']
+			movil.unidad_regional  = form.cleaned_data['unidad_regional']
+			movil.dependencia 	   = form.cleaned_data['dependencia']
+			movil.tipo_vehiculo    = form.cleaned_data['tipo_vehiculo']
+			movil.save()
+			form = MovilForm()
+			msg='Movil Guardado correctamente.'
 	values={
+		'msg':msg,
 		'form':form,
 	}
 	return render_to_response('moviles/nuevo.html',values,context_instance = RequestContext(request))
+
+def obtener_dependencias(request,id_unidad):
+	data = request.POST
+	dependencia = Dependencias.objects.filter(unidades_regionales_id = id_unidad)
+	data = serializers.serialize("json", dependencia)
+	return HttpResponse(data, mimetype='application/json')
+
+def listar(request):
+	moviles = Movil.objects.filter(unidad_regional=UnidadesRegionales.objects.all()[0])
+	unidades = UnidadesRegionales.objects.all()
+	values = {
+		'moviles':moviles,
+		'unidades':unidades,
+	}
+	return render_to_response('moviles/listado.html',values,context_instance = RequestContext(request))

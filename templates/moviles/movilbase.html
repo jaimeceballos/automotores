@@ -9,6 +9,9 @@
 					<a href="{% url 'nuevo' %}"> Nuevo</a>
 				</div>
 				<div class="list-group-item">
+					<a href="{% url 'listar' %}"> Listado de moviles </a>
+				</div>
+				<div class="list-group-item">
 					<a href=""> Cargar Estados</a>
 				</div>
 				<div class="list-group-item">
@@ -17,6 +20,12 @@
 			</div>
 		</div>
 		<div class="col-md-8 column">
+			{% if not msg == '' %}
+				<div class="alert alert-dismissable alert-info">
+					 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<strong>{{msg}}</strong> 
+				</div>
+			{% endif %}
 			{% block movilcuerpo %}
 				<p>En esta secci&oacute;n podra realizar la carga de moviles y el estado de los mismos.</p>
 			{% endblock %}
