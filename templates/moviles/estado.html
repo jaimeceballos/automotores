@@ -1,7 +1,115 @@
-{% extends 'base.html' %}
-{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+     .table {
+	    border-collapse: collapse !important;
+	  }
+	  .table-bordered th,
+	  .table-bordered td {
+	    border: 1px solid #ddd !important;
+	  }
 
-	<div class="container">
+    </style>
+    <script language="Javascript">
+
+  function imprSelec(nombre)
+
+  {
+
+  var ficha = document.getElementById(nombre);
+
+  var ventimp = window.open(' ', 'popimpr');
+
+  ventimp.document.write( ficha.innerHTML );
+
+  ventimp.document.close();
+
+  ventimp.print( );
+
+  ventimp.close();
+
+  } 
+
+</script> 
+</head>
+<body>
+<a href="javascript:imprSelec('imprimir')" >Imprimir</a>
+<div id="imprimir">
+<table style="width:100%;padding-top:20px">
+		<tr>
+			<td colspan="2"><img width="25%" src="{{STATIC_URL}}img/escudo.png" /></td>
+			<td colspan="3"><center><h1>
+				Estado de moviles policiales
+			</h1></center></td>
+			<td colspan="2"><p>
+				Informacion Generada por: 
+			</p></td>
+		</tr>
+	</table>
+	<hr>
+	<table style="width:100%;" class="table table-bordered">	
+		<thead>
+		<tr>
+			<th>
+				#
+			</th>
+			<th>
+				Unidad Regional
+			</th>
+			<th>
+				Dependencia
+			</th>
+			<th>
+				Tipo Movil
+			</th>
+			<th>
+				RI
+			</th>
+			<th>
+				Estado
+			</th>
+			<th>
+				Observaciones
+			</th>
+		</tr>
+	</thead>
+	<tbody >
+		{% for movil in moviles %}
+		<tr>
+			<td>
+				{{movil.id}}
+			</td>
+			<td>
+				{{movil.unidad_regional}}
+			</td>
+			<td> 
+				{{movil.dependencia}}
+			</td>
+			<td>
+				{{movil.tipo_vehiculo}}
+			</td>
+			<td>
+				{{movil.registro_interno}}
+			</td>
+			<td>
+				{{movil.estados.all.0.estado}}
+			</td>
+			<td>
+				{{movil.estados.all.0.observaciones}}
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+</body>
+</html>
+
+	
+
+
+	<!--div class="container">
 	<input type='button' class="btn btn-success" onclick='window.print();' value='Imprimir' />
 	<br><hr>
 	<div class="row clearfix">
@@ -79,5 +187,4 @@
 		</div>
 	</div>
 
-</div>	
-{% endblock %}
+</div-->	
