@@ -22,6 +22,9 @@
 						<th>
 							
 						</th>
+						<th>
+							
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,6 +44,9 @@
 						</td>
 						<td>
 							{{movil.estados.all.0.estado}}
+						</td>
+						<td>
+							<a href="{% url 'modifica_movil' movil.id %}">	<i class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="right" title="Permite Modificar datos del Movil"></i></a>
 						</td>
 						<td>
 							<a href="{% url 'cargar_estado' movil.id %}">	<i class="glyphicon glyphicon-edit" data-toggle="tooltip" data-placement="right" title="Permite Modificar el estado del Movil"></i></a>

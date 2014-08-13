@@ -1,0 +1,21 @@
+{% extends 'moviles/movilbase.html' %}
+{% block movilcuerpo %}
+
+	<form role="form" method="post" action="{% url 'modifica_movil' movil.id %}">{% csrf_token %}
+		<div class="form-group">
+		 	 <label for="id_tipo_vehiculo">Tipo de vehiculo</label>{{form.tipo_vehiculo}}
+		</div>
+		<div class="form-group">
+		 	 <label for="id_unidad_regional">Unidad Regional</label>{{form.unidad_regional}}
+		</div>
+		<div class="form-group">
+		 	 <label for="id_dependencia">Dependencia</label>{{form.dependencia}}
+		</div>
+		<div class="form-group">
+		 	 <label for="id_registro_interno">Registro Interno</label>{{form.registro_interno}}
+		</div>
+		<button type="submit" class="btn btn-success btn-sm pull-right">Guardar</button>
+	</form>
+
+
+{% endblock %}

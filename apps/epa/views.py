@@ -241,6 +241,24 @@ def nuevo(request):
 	}
 	return render_to_response('moviles/nuevo.html',values,context_instance = RequestContext(request))
 
+def modifica_movil(request,id_movil):
+	movil = Movil.objects.get(id = id_movil)
+	form = MovilForm(instance=movil)
+	if request.method == 'POST':
+		form = MovilForm(request.POST)
+		print form.errors
+		if form.is_valid():
+			movil.unidad_regional  = form.cleaned_data['unidad_regional']
+			movil.dependencia 	   = form.cleaned_data['dependencia']
+			movil.tipo_vehiculo    = form.cleaned_data['tipo_vehiculo']
+			movil.save()
+
+	values = {
+		'movil':movil,
+		'form':form,
+	}
+	return render_to_response('moviles/modifica_movil.html',values,context_instance= RequestContext(request))
+
 def obtener_dependencias(request,id_unidad):
 	data = request.POST
 	dependencia = Dependencias.objects.filter(unidades_regionales_id = id_unidad)
