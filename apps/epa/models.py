@@ -153,11 +153,57 @@ class EstadoMovil(models.Model):
     class Meta:
         db_table = 'estado_movil'
 
+class RefTrademark(models.Model):
+    id = models.AutoField(primary_key=True)        
+    descripcion = models.CharField(max_length=100,unique = True)
+
+    def __unicode__(self):
+        return u'%s' % (self.descripcion)
+        self.descripcion = self.descripcion.upper()
+
+    def save(self, force_insert=False,force_update=False):
+        self.descripcion = self.descripcion.upper()
+        super(RefTrademark, self).save(force_insert,force_update)
+
+    class Meta:
+        ordering = ['descripcion']
+        db_table = 'ref_trademark' 
+
+class RefModelos(models.Model):
+    marca           = models.ForeignKey('RefTrademark',related_name="modelos")
+    descripcion     = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return u'%s' % (self.descripcion)
+        self.descripcion = self.descripcion.upper()
+
+    def save(self, force_insert=False,force_update=False):
+        self.descripcion = self.descripcion.upper()
+        super(RefModelos, self).save(force_insert,force_update)
+
+    class Meta:
+        db_table = 'ref_modelos'
+
+class Vehiculo(models.Model):
+    dominio=models.CharField(max_length=10,null=True,blank=True)
+    anio=models.IntegerField(null=True,blank=True)
+    nmotor=models.CharField(max_length=100, null=True,blank=True)
+    nchasis=models.CharField(max_length=100,null=True,blank=True)
+    modelo=models.ForeignKey('RefModelos',on_delete=models.PROTECT,null=True,blank=True)
+    idmarca=models.ForeignKey('RefTrademark',on_delete=models.PROTECT,null=True,blank=True)
+    
+    def __unicode__(self):
+        return u'%s' % (self.dominio)
+
+    class Meta:
+        db_table = 'vehiculo'
+
 class Movil(models.Model):
-    registro_interno = models.CharField(max_length=6,unique=True)
+    registro_interno = models.CharField(max_length=6)
     tipo_vehiculo   = models.ForeignKey('TipoVehiculo',related_name='movil',on_delete=models.PROTECT)
     unidad_regional     = models.ForeignKey('UnidadesRegionales',related_name='moviles',on_delete=models.PROTECT)
     dependencia         = models.ForeignKey('Dependencias',related_name='moviles_en',on_delete=models.PROTECT)
+    vehiculo            = models.OneToOneField('Vehiculo',on_delete=models.PROTECT,null=True,blank=True)
 
     def __unicode__(self):
         return u'%s' % (self.registro_interno)

@@ -68,6 +68,30 @@ class EstadoMovilForm(forms.ModelForm):
     class Meta:
         model = EstadoMovil
 
+class RefTrademarkForm(forms.ModelForm):
+    descripcion = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'Descripcion'})),required=True)    
+
+    class Meta:
+        model = RefTrademark
+
+class RefModelosForm(forms.ModelForm):
+    marca     = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})), queryset= RefTrademark.objects.all())
+    descripcion = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'Descripcion'})),required=True)    
+
+    class Meta:
+        model = RefModelos
+
+class VehiculoForm(forms.ModelForm):
+    dominio     = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'required form-control','placeholder':'AAH-113','required':'required'})),required=True)    
+    anio        = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'form-control','placeholder':'2014'})))    
+    nmotor      = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'form-control','placeholder':'Numero de motor'})))    
+    nchasis     = forms.CharField(widget=forms.TextInput(attrs=dict({'class':'form-control','placeholder':'Numero de chasis'})))    
+    modelo      = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})), queryset= RefModelos.objects.all())
+    idmarca     = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})), queryset= RefTrademark.objects.all())
+
+    class Meta:
+        model = Vehiculo
+
 class MovilForm(forms.ModelForm):
     unidad_regional     = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})), queryset= UnidadesRegionales.objects.all())
     dependencia         = forms.ModelChoiceField(widget = forms.Select(dict({'class':'required form-control'})),queryset=Dependencias.objects.all())

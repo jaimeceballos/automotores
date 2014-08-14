@@ -1,7 +1,31 @@
 {% extends 'moviles/movilbase.html' %}
 {% block movilcuerpo %}
-
-	<form role="form" method="post" action="{% url 'nuevo' %}">{% csrf_token %}
+	{% if movil %}
+		<form role="form" method="post" action="{% url 'modifica_movil' movil.id %}">{% csrf_token %}
+	{% else %}
+		<form role="form" method="post" action="{% url 'nuevo' %}">{% csrf_token %}
+	{% endif %}
+		<h3>Datos del vehiculo</h3>
+		<div class="form-group">
+		 	 <label for="id_idmarca">Marca</label>{{form_vehiculo.idmarca}}
+		</div>
+		<div class="form-group">
+		 	 <label for="id_modelo">Modelo</label>{{form_vehiculo.modelo}}
+		</div>
+		<div class="form-group">
+		 	 <label for="id_anio">A&ntilde;o</label>{{form_vehiculo.anio}}
+		</div>
+		<div class="form-group">
+		 	 <label for="id_nchasis">Numero de Chasis</label>{{form_vehiculo.nchasis}}
+		</div>
+		<div class="form-group">
+		 	 <label for="id_nmotor">Numero de motor</label>{{form_vehiculo.nmotor}}
+		</div>
+		<div class="form-group">
+		 	 <label for="id_dominio">Dominio</label>{{form_vehiculo.dominio}}
+		</div>
+		<hr class="divider">
+		<h3>Datos del movil</h3>
 		<div class="form-group">
 		 	 <label for="id_tipo_vehiculo">Tipo de vehiculo</label>{{form.tipo_vehiculo}}
 		</div>

@@ -179,6 +179,74 @@ def tipovehiculo(request,id_tipo):
 	}
 	return render_to_response('referencias/tiposvehiculos.html',values, context_instance = RequestContext(request))	
 
+def marcas(request):
+	form = RefTrademarkForm()
+	marcas = RefTrademark.objects.all()
+	if request.method == 'POST':
+		form = RefTrademarkForm(request.POST)
+		if form.is_valid():
+			marca = RefTrademark()
+			marca.descripcion = form.cleaned_data['descripcion']
+			marca.save()
+			return HttpResponseRedirect(reverse('marcas'))
+	values = {
+		'form':form,
+		'marcas':marcas,
+	}
+	return render_to_response('referencias/marcas.html',values,context_instance = RequestContext(request))
+
+def marca(request,id_marca):
+	marca = RefTrademark.objects.get(id=id_marca)
+	form = RefTrademarkForm(instance=marca)
+	marcas = RefTrademark.objects.all()
+	if request.method == 'POST':
+		form = RefTrademarkForm(request.POST)
+		if form.is_valid():
+			marca.descripcion = form.cleaned_data['descripcion']
+			marca.save()
+			return HttpResponseRedirect(reverse('marcas'))
+	values = {
+		'marca':marca,
+		'form':form,
+		'marcas':marcas,
+	}
+	return render_to_response('referencias/marcas.html',values,context_instance = RequestContext(request))
+
+def modelos(request):
+	form = RefModelosForm()
+	modelos = RefModelos.objects.all()
+	if request.method == 'POST':
+		form = RefModelosForm(request.POST)
+		if form.is_valid():
+			modelo = RefModelos()
+			modelo.marca       = form.cleaned_data['marca']
+			modelo.descripcion = form.cleaned_data['descripcion']
+			modelo.save()
+			return HttpResponseRedirect(reverse('modelos'))
+	values = {
+		'form':form,
+		'modelos':modelos,
+	}
+	return render_to_response('referencias/modelos.html',values,context_instance = RequestContext(request))
+
+def modelo(request,id_modelo):
+	modelo = RefModelos.objects.get(id=id_modelo)
+	form = RefModelosForm(instance=modelo)
+	modelos = RefModelos.objects.all()
+	if request.method == 'POST':
+		form = RefModelosForm(request.POST)
+		if form.is_valid():
+			modelo.marca 	   = form.cleaned_data['marca']
+			modelo.descripcion = form.cleaned_data['descripcion']
+			modelo.save()
+			return HttpResponseRedirect(reverse('modelos'))
+	values = {
+		'modelo':modelo,
+		'form':form,
+		'modelos':modelos,
+	}
+	return render_to_response('referencias/modelos.html',values,context_instance = RequestContext(request))
+
 def estadosmovil(request):
 	form = EstadoMovilForm()
 	estados = EstadoMovil.objects.all()
@@ -223,41 +291,85 @@ def moviles(request):
 
 def nuevo(request):
 	form = MovilForm()
+	form_vehiculo = VehiculoForm()
 	msg=''
 	if request.method == 'POST':
 		form = MovilForm(request.POST)
-		if form.is_valid():
-			movil = Movil()
-			movil.registro_interno = form.cleaned_data['registro_interno']
-			movil.unidad_regional  = form.cleaned_data['unidad_regional']
-			movil.dependencia 	   = form.cleaned_data['dependencia']
-			movil.tipo_vehiculo    = form.cleaned_data['tipo_vehiculo']
-			movil.save()
-			form = MovilForm()
-			msg='Movil Guardado correctamente.'
+		form_vehiculo = VehiculoForm(request.POST)
+		if form.is_valid() and form_vehiculo.is_valid():
+			vehiculo = Vehiculo()
+			vehiculo.nmotor 	   = form_vehiculo.cleaned_data['nmotor']
+			vehiculo.nchasis	   = form_vehiculo.cleaned_data['nchasis']
+			vehiculo.idmarca 	   = form_vehiculo.cleaned_data['idmarca']
+			vehiculo.modelo        = form_vehiculo.cleaned_data['modelo']
+			vehiculo.dominio       = form_vehiculo.cleaned_data['dominio']
+			vehiculo.anio          = form_vehiculo.cleaned_data['anio']
+			try:
+				vehiculo.save()
+				movil = Movil()
+				movil.vehiculo         = vehiculo
+				movil.registro_interno = form.cleaned_data['registro_interno']
+				movil.unidad_regional  = form.cleaned_data['unidad_regional']
+				movil.dependencia 	   = form.cleaned_data['dependencia']
+				movil.tipo_vehiculo    = form.cleaned_data['tipo_vehiculo']
+				movil.save()
+				form = MovilForm()
+				msg='Movil Guardado correctamente.'
+			except Exception, e:
+				print e
+				msg = "No se pudo guardar"
+			
+			
 	values={
 		'msg':msg,
 		'form':form,
+		'form_vehiculo':form_vehiculo,
 	}
 	return render_to_response('moviles/nuevo.html',values,context_instance = RequestContext(request))
 
 def modifica_movil(request,id_movil):
 	movil = Movil.objects.get(id = id_movil)
 	form = MovilForm(instance=movil)
+	vehiculo = Vehiculo.objects.get(id = movil.vehiculo.id)
+	form_vehiculo = VehiculoForm(instance=vehiculo)
+	msg=""
 	if request.method == 'POST':
 		form = MovilForm(request.POST)
-		print form.errors
-		if form.is_valid():
-			movil.unidad_regional  = form.cleaned_data['unidad_regional']
-			movil.dependencia 	   = form.cleaned_data['dependencia']
-			movil.tipo_vehiculo    = form.cleaned_data['tipo_vehiculo']
-			movil.save()
-
+		form_vehiculo = VehiculoForm(request.POST)
+		if form.is_valid() and form_vehiculo.is_valid():
+			vehiculo.nmotor 	   = form_vehiculo.cleaned_data['nmotor']
+			vehiculo.nchasis	   = form_vehiculo.cleaned_data['nchasis']
+			vehiculo.idmarca 	   = form_vehiculo.cleaned_data['idmarca']
+			vehiculo.modelo        = form_vehiculo.cleaned_data['modelo']
+			vehiculo.dominio       = form_vehiculo.cleaned_data['dominio']
+			vehiculo.anio          = form_vehiculo.cleaned_data['anio']
+			try:
+				vehiculo.save()
+				movil.vehiculo         = vehiculo
+				movil.registro_interno = form.cleaned_data['registro_interno']
+				movil.unidad_regional  = form.cleaned_data['unidad_regional']
+				movil.dependencia 	   = form.cleaned_data['dependencia']
+				movil.tipo_vehiculo    = form.cleaned_data['tipo_vehiculo']
+				movil.save()
+				form = MovilForm()
+				form_vehiculo = VehiculoForm()
+				msg='Movil Guardado correctamente.'
+			except Exception, e:
+				print e
+				msg = "No se pudo guardar"
+		else:
+			msg = "Verifique los datos ingresados"
+	movil = Movil.objects.get(id = id_movil)
+	form = MovilForm(instance=movil)
+	vehiculo = Vehiculo.objects.get(id = movil.vehiculo.id)
+	form_vehiculo = VehiculoForm(instance=vehiculo)
 	values = {
 		'movil':movil,
 		'form':form,
+		'form_vehiculo':form_vehiculo,
+		'msg':msg,
 	}
-	return render_to_response('moviles/modifica_movil.html',values,context_instance= RequestContext(request))
+	return render_to_response('moviles/nuevo.html',values,context_instance= RequestContext(request))
 
 def obtener_dependencias(request,id_unidad):
 	data = request.POST
