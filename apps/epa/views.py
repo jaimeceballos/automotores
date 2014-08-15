@@ -330,8 +330,11 @@ def nuevo(request):
 def modifica_movil(request,id_movil):
 	movil = Movil.objects.get(id = id_movil)
 	form = MovilForm(instance=movil)
-	vehiculo = Vehiculo.objects.get(id = movil.vehiculo.id)
-	form_vehiculo = VehiculoForm(instance=vehiculo)
+	vehiculo = Vehiculo()
+	form_vehiculo = VehiculoForm()
+	if movil.vehiculo:
+		vehiculo = Vehiculo.objects.get(id = movil.vehiculo.id)
+		form_vehiculo = VehiculoForm(instance=vehiculo)
 	msg=""
 	if request.method == 'POST':
 		form = MovilForm(request.POST)
@@ -361,8 +364,11 @@ def modifica_movil(request,id_movil):
 			msg = "Verifique los datos ingresados"
 	movil = Movil.objects.get(id = id_movil)
 	form = MovilForm(instance=movil)
-	vehiculo = Vehiculo.objects.get(id = movil.vehiculo.id)
-	form_vehiculo = VehiculoForm(instance=vehiculo)
+	vehiculo = Vehiculo()
+	form_vehiculo = VehiculoForm()
+	if movil.vehiculo:
+		vehiculo = Vehiculo.objects.get(id = movil.vehiculo.id)
+		form_vehiculo = VehiculoForm(instance=vehiculo)
 	values = {
 		'movil':movil,
 		'form':form,
