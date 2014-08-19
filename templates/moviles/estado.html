@@ -34,7 +34,7 @@
 </script> 
 </head>
 <body>
-<a href="javascript:imprSelec('imprimir')" >Imprimir</a>
+<a href="javascript:imprSelec('imprimir')" >Imprimir</a> <a href="javascript:history.back(1)"> Volver </a>
 <div id="imprimir">
 <table style="width:100%;padding-top:20px">
 		<tr>
@@ -52,25 +52,34 @@
 		<thead>
 		<tr>
 			<th>
-				#
-			</th>
-			<th>
-				Unidad Regional
-			</th>
-			<th>
-				Dependencia
-			</th>
-			<th>
-				Tipo Movil
-			</th>
-			<th>
 				RI
 			</th>
 			<th>
-				Estado
+				Tipo
 			</th>
 			<th>
-				Observaciones
+				Marca
+			</th>
+			<th>
+				Modelo
+			</th>
+			<th>
+				A&ntilde;o
+			</th>
+			<th>
+				Dominio
+			</th>
+			<th>
+				Motor
+			</th>
+			<th>
+				Chasis
+			</th>
+			<th>
+				Destino
+			</th>
+			<th>
+				Estado
 			</th>
 		</tr>
 	</thead>
@@ -78,25 +87,34 @@
 		{% for movil in moviles %}
 		<tr>
 			<td>
-				{{movil.id}}
-			</td>
-			<td>
-				{{movil.unidad_regional}}
-			</td>
-			<td> 
-				{{movil.dependencia}}
+				{{movil.registro_interno}}
 			</td>
 			<td>
 				{{movil.tipo_vehiculo}}
 			</td>
+			<td> 
+				{{movil.vehiculo.marca}}
+			</td>
 			<td>
-				{{movil.registro_interno}}
+				{{movil.vehiculo.modelo}}
+			</td>
+			<td>
+				{{movil.vehiculo.anio}}
+			</td>
+			<td>
+				{{movil.vehiculo.dominio}}
+			</td>
+			<td>
+				{{movil.vehiculo.motor}}
+			</td>
+			<td>
+				{{movil.vehiculo.chasis}}
+			</td>
+			<td>
+				{{movil.unidad_regional}} - {{movil.dependencia}}
 			</td>
 			<td>
 				{{movil.estados.all.0.estado}}
-			</td>
-			<td>
-				{{movil.estados.all.0.observaciones}}
 			</td>
 		</tr>
 		{% endfor %}

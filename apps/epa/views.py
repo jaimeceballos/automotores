@@ -16,18 +16,32 @@ from django.core import serializers
 
 def login(request):
 	form = LoginForm()
-
+	error = ''
 	if request.method =='POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
 			usuario = form.data['usuario']
 			password = form.data['password']
-			print auth.authenticate(username=usuario,password=password)
 			user = auth.authenticate(username=usuario,password=password)
+			print user
 			if user is not None and user.is_active:
 
 				auth.login(request,user)
 				return HttpResponseRedirect(reverse('home'))
+			else:
+				error = 'Usuario o clave incorrecto.'
+				values={
+					'form':form,
+					'error':error,
+				}
+				return render_to_response('accounts/login.html',values, context_instance = RequestContext(request))
+		else:
+			error = 'Verifique los datos ingresados.'
+			values={
+				'form':form,
+				'error':error,
+			}
+			return render_to_response('accounts/login.html',values, context_instance = RequestContext(request))
 	values={
 		'form':form,
 	}
